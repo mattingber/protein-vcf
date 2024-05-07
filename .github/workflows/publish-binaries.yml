@@ -45,7 +45,7 @@ jobs:
     needs:
       - build
     outputs:
-      upload-url: steps.create_release.outputs.upload_url
+      upload-url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: Create Release
         id: create_release
