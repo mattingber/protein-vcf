@@ -76,14 +76,14 @@ jobs:
       - name: test
         run: |
           ls -alF distbin
-          ls -alF distbin/pvcf-mac
+          ls -alF distbin/pvcf-${{ matrix.os }}
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: distbin/pvcf-mac/pvcf
+          asset_path: distbin/pvcf-${{ matrix.os }}/pvcf
           asset_name: pvcf-${{ matrix.os }}
           asset_content_type: application/octet-stream
       # - name: Create release
