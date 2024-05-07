@@ -63,6 +63,6 @@ jobs:
         uses: Roang-zero1/github-upload-release-artifacts-action@v2
         with:
           args: "distbin/ "
-          created_tag: "protein-vcf-main"
+          created_tag: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
