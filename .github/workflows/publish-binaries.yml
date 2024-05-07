@@ -61,7 +61,10 @@ jobs:
             Initial release
           draft: false
           prerelease: false
-          
+      - name: test
+        run: |
+          ls -alF distbin
+          ls -alF distbin/pvcf-mac
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
