@@ -49,20 +49,42 @@ jobs:
         #   name: # optional
         #   # Destination path. Supports basic tilde expansion. Defaults to $GITHUB_WORKSPACE
           path: distbin/
-
-      - name: Create release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: |
-          gh release create "${{ github.ref_name }}" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/}-${tag#v}" \
-              --generate-notes
-      - name: Upload release artifacts
-        uses: Roang-zero1/github-upload-release-artifacts-action@v2
         with:
-          args: "distbin/ "
-          created_tag: "main"
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
+          body: |
+            Initial release
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: distbin/pvcf-mac
+          asset_name: pvcf-mac
+          asset_content_type: application/octet-stream
+      # - name: Create release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     tag: ${{ github.ref_name }}
+      #   run: |
+      #     gh release create "${{ github.ref_name }}" \
+      #         --repo="$GITHUB_REPOSITORY" \
+      #         --title="${GITHUB_REPOSITORY#*/}-${tag#v}" \
+      #         --generate-notes
+      # - name: Upload release artifacts
+      #   uses: Roang-zero1/github-upload-release-artifacts-action@v2
+      #   with:
+      #     args: "distbin/ "
+      #     created_tag: "main"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
