@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: publish pvcf pinaries
 
 on:
   push:
@@ -30,6 +30,15 @@ jobs:
     - name: create a binary realease for mac
       run: |
         pyinstaller pvcf.py
-    - name: Test with pytest
-      run: |
-        pytest
+    # - name: Upload a Build Artifact
+    #   uses: actions/upload-artifact@v4.3.3
+    #   with:
+    #     name: pvcf-mac
+    #     # A file, directory or wildcard pattern that describes what to upload
+    #     path: ./dist/pvcf/pvcf
+    - name: Upload release artifacts
+      uses: Roang-zero1/github-upload-release-artifacts-action@v2
+      with:
+        args: "dist/pvcf/ "
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
