@@ -57,12 +57,12 @@ jobs:
         run: |
           gh release create "${{ github.ref_name }}" \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --title="${GITHUB_REPOSITORY#*/}-${tag#v}" \
               --generate-notes
       - name: Upload release artifacts
         uses: Roang-zero1/github-upload-release-artifacts-action@v2
         with:
           args: "distbin/ "
-          created_tag: "protein-vcf master"
+          created_tag: "protein-vcf-main"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
